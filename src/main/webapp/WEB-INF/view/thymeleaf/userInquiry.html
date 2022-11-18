@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<style>
+    * {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    header{
+        width: 100%;
+        height: 10%;
+    }
+    main{
+        width: 100%;
+        height: 85%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    footer{
+        width: 100%;
+        height: 5%;
+    }
+    table,th,td{
+        border: 1px solid black;
+        font-size: 13pt;
+    }
+
+    .table{
+        width: 70%;
+        height: 30%;
+        table-layout: fixed;
+        text-align: center;
+        overflow: hidden;
+    }
+    .tableHead{
+        height: 30px;
+    }
+
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>고객 문의 목록 페이지</title>
+</head>
+<body>
+<header></header>
+    <h2><span th:text="${id}"></span>님의 문의 목록</h2><br/>
+<main>
+    <table class="table">
+        <th class="tableHead" style="width: 15%">No.</th>
+        <th class="tableHead" style="width: 50%">제목</th>
+        <th class="tableHead" style="width: 20%">작성일시</th>
+        <th class="tableHead" style="width: 15%">답변여부</th>
+        <tr th:each="inquiry : ${inquiries}">
+            <td th:text="${inquiry.id}"></td>
+            <td th:onclick="|location.href='@{/inquiry}'|"
+                th:text="${inquiry.title}"></td>
+            <td th:text="${inquiry.writeDateTime}"></td>
+            <td th:text="${inquiry.isAnswered}"></td>
+
+        </tr>
+        <c:forEach var="post" items="${postList}">
+            <tr class="tableRow">
+                <td onclick="location.href='/posts/${post.id}.do'">${post.id}</td>
+                <td onclick="location.href='/posts/${post.id}.do'">${post.title}</td>
+                <td onclick="location.href='/users/${post.writerUserId}.do'">${post.writerUserId}</td>
+                <td onclick="location.href='/posts/${post.id}.do'">
+                    ${DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(post.writeTime)}
+                </td>
+                <td onclick="location.href='/posts/${post.id}.do'">
+                    ${post.viewCount}
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
+</main>
+</body>
+</html>

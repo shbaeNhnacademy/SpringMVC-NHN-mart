@@ -25,7 +25,7 @@ public class RootConfig {
     @Bean
     public UserRepository userRepository() {
         UserRepository userRepository = new UserRepositoryImpl();
-        userRepository.addUser("customerKim", "1234","김고객");
+        userRepository.addUser("user", "1234","김고객");
 
         return userRepository;
     }
@@ -33,6 +33,11 @@ public class RootConfig {
     @Bean
     public SessionRepository sessionRepository() {
         return new SessionRepositoryImpl();
+    }
+
+    @Bean
+    public InquiryRepository inquiryRepository() {
+        return new InquiryRepositoryImpl();
     }
 
     @Bean
