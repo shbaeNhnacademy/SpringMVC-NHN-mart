@@ -20,6 +20,7 @@ class InquiryRepositoryImplTest {
     @Test
     void register_success() {
         Inquiry build = Inquiry.builder()
+                .writerId("tester")
                 .title("aa")
                 .content("sfqfdscsa")
                 .category(InquiryCategory.COMPLAINT)
@@ -34,6 +35,7 @@ class InquiryRepositoryImplTest {
     @Test
     void remove_success() {
         Inquiry build = Inquiry.builder()
+                .writerId("tester")
                 .title("aa")
                 .content("sfqfdscsa")
                 .category(InquiryCategory.COMPLAINT)
@@ -50,6 +52,7 @@ class InquiryRepositoryImplTest {
     @Test
     void getInquiry_success() {
         Inquiry build = Inquiry.builder()
+                .writerId("tester")
                 .title("aa")
                 .content("sfqfdscsa")
                 .category(InquiryCategory.COMPLAINT)
@@ -64,6 +67,7 @@ class InquiryRepositoryImplTest {
     @Test
     void getInquiries_success() {
         Inquiry build = Inquiry.builder()
+                .writerId("tester")
                 .title("aa")
                 .content("sfqfdscsa")
                 .category(InquiryCategory.COMPLAINT)

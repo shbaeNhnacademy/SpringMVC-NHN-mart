@@ -16,9 +16,6 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         if (Objects.isNull(session)) {
             response.sendRedirect("/");
             return false;
-//            if (Objects.isNull(session.getAttribute("login"))) {
-//
-//            }
         }
         log.info("{}", session.getAttribute("login"));
         return true;

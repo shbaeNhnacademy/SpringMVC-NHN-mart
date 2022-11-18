@@ -10,4 +10,6 @@ public interface InquiryRepository {
 
     Inquiry getInquiry(long id);
     List<Inquiry> getInquiries();
+
+    List<Inquiry> getInquiriesByUserId(String userId);
 }

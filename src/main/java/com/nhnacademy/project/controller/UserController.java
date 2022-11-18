@@ -1,15 +1,24 @@
 package com.nhnacademy.project.controller;
 
+import com.nhnacademy.project.config.RootConfig;
 import com.nhnacademy.project.domain.Inquiry;
+import com.nhnacademy.project.domain.InquiryRegisterRequest;
+import com.nhnacademy.project.exception.IllegalExtensionException;
+import com.nhnacademy.project.exception.ValidationFailedException;
 import com.nhnacademy.project.repository.InquiryRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import javax.validation.Valid;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -23,11 +32,14 @@ public class UserController {
 
     @GetMapping
     public String getUserMain(HttpServletRequest request, ModelMap modelMap) {
-        List<Inquiry> inquiries = inquiryRepository.getInquiries();
+        String userId = (String) request.getSession(false).getAttribute("login");
+        List<Inquiry> inquiries = inquiryRepository.getInquiriesByUserId(userId);
 
-        modelMap.put("id", request.getSession(false).getAttribute("login"));
+        modelMap.put("id", userId);
         modelMap.put("inquiries", inquiries);
 
         return "thymeleaf/userMain";
     }
+
+
 }

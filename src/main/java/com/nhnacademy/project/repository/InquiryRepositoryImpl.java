@@ -46,6 +46,14 @@ public class InquiryRepositoryImpl implements InquiryRepository{
         return new ArrayList<>(inquiryMap.values());
     }
 
+    @Override
+    public List<Inquiry> getInquiriesByUserId(String userId) {
+        return inquiryMap.values().stream()
+                .filter(inquiry -> inquiry.getWriterId().equals(userId))
+                .collect(Collectors.toList());
+    }
+
+
     private boolean exist(long id){
         return inquiryMap.containsKey(id);
     }

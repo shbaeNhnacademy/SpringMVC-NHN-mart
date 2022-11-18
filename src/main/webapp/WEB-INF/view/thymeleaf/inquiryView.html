@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>문의 상세 내역</title>
+</head>
+<body>
+  <h2>문의 상세 내역 페이지</h2><br/>
+
+  제목 : <span th:text="${inquiry.title}"></span><br />
+  작성자 :  <span th:text="${inquiry.writerId}"></span><br />
+  분류 :  <span th:text="${inquiry.category.name}"></span><br />
+  작성일자 :  <span th:text="${#temporals.format(inquiry.writeDateTime,'yyyy-MM-dd HH:mm')}"></span><br />
+  분류 :  <span th:text="${inquiry.content}"></span><br />
+  첨부 파일 :
+  <ul th:each="file:${inquiry.files}" >
+      <li><a th:href="@{/cs/inquiry/{id}/{filename}(id=${inquiry.id},filename=${file.getOriginalFilename()})}" th:text="${file.getOriginalFilename()} "></a></li>
+  </ul>
+  <img th:src="|@{/cs/inquiry/{id}/{filename}(id=${inquiry.id},filename=${file.getOriginalFilename()})}|">
+  <br />
+
+</body>
+</html>

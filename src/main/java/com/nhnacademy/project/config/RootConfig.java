@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @ComponentScan(basePackageClasses = Base.class,
         excludeFilters = { @ComponentScan.Filter(Controller.class)})
 public class RootConfig {
-
+    public static final String UPLOAD_DIR = "/Users/suhan/Downloads/";
     @Bean
     public ManagerRepository studentRepository() {
         ManagerRepository managerRepository = new ManagerRepositoryImpl();
@@ -30,6 +30,7 @@ public class RootConfig {
     public UserRepository userRepository() {
         UserRepository userRepository = new UserRepositoryImpl();
         userRepository.addUser("user", "1234","김고객");
+        userRepository.addUser("merge", "1234","박고객");
 
         return userRepository;
     }
@@ -43,6 +44,7 @@ public class RootConfig {
     public InquiryRepository inquiryRepository() {
         InquiryRepositoryImpl inquiryRepository = new InquiryRepositoryImpl();
         Inquiry test = Inquiry.builder().title("test")
+                .writerId("merge")
                 .content("테스트입니다.")
                 .category(InquiryCategory.COMPLIMENT)
                 .writeDateTime(LocalDateTime.now())
