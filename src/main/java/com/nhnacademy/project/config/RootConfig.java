@@ -1,6 +1,8 @@
 package com.nhnacademy.project.config;
 
 import com.nhnacademy.project.Base;
+import com.nhnacademy.project.domain.Inquiry;
+import com.nhnacademy.project.domain.InquiryCategory;
 import com.nhnacademy.project.repository.*;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -8,6 +10,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
+
+import java.time.LocalDateTime;
 
 @Configuration
 @ComponentScan(basePackageClasses = Base.class,
@@ -37,7 +41,14 @@ public class RootConfig {
 
     @Bean
     public InquiryRepository inquiryRepository() {
-        return new InquiryRepositoryImpl();
+        InquiryRepositoryImpl inquiryRepository = new InquiryRepositoryImpl();
+        Inquiry test = Inquiry.builder().title("test")
+                .content("테스트입니다.")
+                .category(InquiryCategory.COMPLIMENT)
+                .writeDateTime(LocalDateTime.now())
+                .build();
+        inquiryRepository.register(test);
+        return inquiryRepository;
     }
 
     @Bean

@@ -18,6 +18,8 @@ public class InquiryRepositoryImpl implements InquiryRepository{
                 .max(Long::compareTo)
                 .map(l -> l + 1)
                 .orElse(1L);
+        inquiry.setId(id);
+
         inquiryMap.put(id, inquiry);
 
         return id;
