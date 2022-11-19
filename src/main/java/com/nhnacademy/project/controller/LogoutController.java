@@ -31,7 +31,7 @@ public class LogoutController {
             sessionRepository.remove(session.getId());
             session.invalidate();
 
-            Cookie cookie = new Cookie("SESSION", null);
+            Cookie cookie = new Cookie("SESSION", "");
             cookie.setMaxAge(0);
             response.addCookie(cookie);
         }

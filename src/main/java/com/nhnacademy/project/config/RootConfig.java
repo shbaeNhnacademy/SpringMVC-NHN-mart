@@ -19,19 +19,19 @@ import java.time.LocalDateTime;
         excludeFilters = { @ComponentScan.Filter(Controller.class)})
 public class RootConfig {
     public static final String UPLOAD_DIR = "/Users/suhan/Downloads/";
-    @Bean
-    public ManagerRepository studentRepository() {
-        ManagerRepository managerRepository = new ManagerRepositoryImpl();
-        managerRepository.addManager("admin", "12345", "박매니저");
-
-        return managerRepository;
-    }
 
     @Bean
     public UserRepository userRepository() {
         UserRepository userRepository = new UserRepositoryImpl();
-        userRepository.addUser("user", "1234","김고객", UserGrade.CUSTOMER);
-        userRepository.addUser("merge", "1234", "박고객", UserGrade.CUSTOMER);
+
+        //고객 등록
+        userRepository.add("user", "1234","김고객", UserGrade.CUSTOMER);
+        userRepository.add("merge", "1234", "박고객", UserGrade.CUSTOMER);
+
+        // CS manger 등록
+        userRepository.add("admin", "12345", "최매니저", UserGrade.CS_MANAGER);
+
+
 
         return userRepository;
     }

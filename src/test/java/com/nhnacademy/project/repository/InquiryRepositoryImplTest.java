@@ -3,6 +3,7 @@ package com.nhnacademy.project.repository;
 import com.nhnacademy.project.domain.Inquiry;
 import com.nhnacademy.project.domain.InquiryCategory;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -17,7 +18,9 @@ class InquiryRepositoryImplTest {
         inquiryRepository = new InquiryRepositoryImpl();
     }
 
+    //TODO 실패 케이스 작성 필요
     @Test
+    @DisplayName("register - 성공")
     void register_success() {
         Inquiry build = Inquiry.builder()
                 .writerId("tester")
@@ -33,6 +36,7 @@ class InquiryRepositoryImplTest {
 
 
     @Test
+    @DisplayName("remove - 성공")
     void remove_success() {
         Inquiry build = Inquiry.builder()
                 .writerId("tester")
@@ -50,6 +54,7 @@ class InquiryRepositoryImplTest {
     }
 
     @Test
+    @DisplayName("getInquiry - 성공")
     void getInquiry_success() {
         Inquiry build = Inquiry.builder()
                 .writerId("tester")
@@ -65,6 +70,7 @@ class InquiryRepositoryImplTest {
     }
 
     @Test
+    @DisplayName("getInquiries - 성공")
     void getInquiries_success() {
         Inquiry build = Inquiry.builder()
                 .writerId("tester")

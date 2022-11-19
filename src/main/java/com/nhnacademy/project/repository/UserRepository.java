@@ -7,7 +7,7 @@ public interface UserRepository {
     boolean exists(String id);
     boolean matches(String id, String password);
 
-    User addUser(String id, String password, String name, UserGrade grade);
+    User add(String id, String password, String name, UserGrade grade);
 
     User getUser(String id);
 

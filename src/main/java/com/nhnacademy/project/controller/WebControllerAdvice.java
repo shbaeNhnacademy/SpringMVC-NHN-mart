@@ -2,7 +2,6 @@ package com.nhnacademy.project.controller;
 
 import com.nhnacademy.project.domain.InquiryRegisterRequest;
 import com.nhnacademy.project.exception.UserAlreadyExistsException;
-import com.nhnacademy.project.exception.ManagerAlreadyExistsException;
 import com.nhnacademy.project.exception.ValidationFailedException;
 import com.nhnacademy.project.exception.WrongLoginInfoException;
 import lombok.extern.slf4j.Slf4j;
@@ -49,13 +48,6 @@ public class WebControllerAdvice {
         return THYMELEAF_ERROR;
     }
 
-    @ExceptionHandler(ManagerAlreadyExistsException.class)
-    public String handleManagerAlreadyExistsException(ManagerAlreadyExistsException ex, Model model) {
-        log.info("", ex);
-
-        model.addAttribute(EXCEPTION, ex);
-        return THYMELEAF_ERROR;
-    }
 
     @ExceptionHandler(Exception.class)
     public String handleException(Exception ex, Model model) {
