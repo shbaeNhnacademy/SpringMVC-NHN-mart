@@ -11,5 +11,10 @@
         <br />
         <input type="submit" />
     </form>
+    <br />
+    <div th:if="${not #strings.isEmpty(loginInfo)}">
+        <p style="color: red" th:text="${loginInfo}"></p>
+    </div>
+
 </body>
 </html>

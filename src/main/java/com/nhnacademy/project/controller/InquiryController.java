@@ -44,14 +44,12 @@ public class InquiryController {
     public String getInquiryForm(HttpServletRequest request, ModelMap modelMap) {
         String userId = (String) request.getSession(false).getAttribute("login");
         modelMap.put("id", userId);
-        modelMap.put("now", LocalDateTime.now());
 
         return "thymeleaf/inquiryForm";
     }
 
     @PostMapping
     public String postInquiry(@Valid @ModelAttribute InquiryRegisterRequest inquiryRegisterRequest,
-                                ModelMap modelMap,
                                 BindingResult bindingResult) throws IOException {
         if (bindingResult.hasErrors()) {
             throw new ValidationFailedException(bindingResult);

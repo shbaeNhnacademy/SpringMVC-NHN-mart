@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -34,9 +35,12 @@ public class UserController {
     public String getUserMain(HttpServletRequest request, ModelMap modelMap) {
         String userId = (String) request.getSession(false).getAttribute("login");
         List<Inquiry> inquiries = inquiryRepository.getInquiriesByUserId(userId);
+        List<Inquiry> collect = inquiries.stream()
+                .sorted(Comparator.comparing(Inquiry::getId).reversed())
+                .collect(Collectors.toList());
 
         modelMap.put("id", userId);
-        modelMap.put("inquiries", inquiries);
+        modelMap.put("inquiries", collect);
 
         return "thymeleaf/userMain";
     }

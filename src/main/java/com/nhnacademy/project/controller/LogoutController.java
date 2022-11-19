@@ -1,5 +1,6 @@
 package com.nhnacademy.project.controller;
 
+import com.nhnacademy.project.repository.SessionRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,20 +15,27 @@ import java.util.Objects;
 @Controller
 public class LogoutController {
 
+    private final SessionRepository sessionRepository;
+
+    public LogoutController(SessionRepository sessionRepository) {
+        this.sessionRepository = sessionRepository;
+    }
+
     @GetMapping("/logout")
     public String logout(HttpServletRequest request,
                          HttpServletResponse response) {
         HttpSession session = request.getSession(false);
 
-        if (!Objects.isNull(session)) {
+        if (!Objects.isNull(session) && sessionRepository.exists(session.getId())) {
             session.setAttribute("login", "");
+            sessionRepository.remove(session.getId());
             session.invalidate();
 
             Cookie cookie = new Cookie("SESSION", null);
             cookie.setMaxAge(0);
             response.addCookie(cookie);
         }
-        return "redirect:/login";
+        return "redirect:/";
     }
 
 }

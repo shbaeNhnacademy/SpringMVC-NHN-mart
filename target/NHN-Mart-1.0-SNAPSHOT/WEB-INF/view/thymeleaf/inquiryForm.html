@@ -7,7 +7,8 @@
 <body>
   <h2>문의하기</h2><br/>
   <form method="post" action="/cs/inquiry" enctype="multipart/form-data">
-      제목 : <input type="text" name="title" width="300px" /><br />
+
+      제목 : <textarea name="title" rows="1" cols="80"></textarea><br />
       작성자 : <input type="text" name="writerId" th:value="${id}" readonly/><br />
       분류 :
       <select name="category" >
@@ -17,11 +18,14 @@
           <option value="COMPLIMENT">칭찬해요</option>
           <option value="ETC">기타 문의</option>
       </select> <br/>
-      내용 : <textarea name="content" rows="10" cols="80"></textarea><br />
+      본문 : <textarea name="content" rows="10" cols="80"></textarea><br />
       <br />
       <input type="file" name="files" multiple="multiple" accept=".jpg, .png, .gif, .jpeg" /> <span> (gif,png,jpg,jpeg 만 가능)</span><br /><br /><br />
-      <input type="submit" /> &nbsp;
+      <input type="submit" value="확인" /> &nbsp;
       <button type="button" onclick="location.href='/cs'">취소</button>
   </form>
+  <div th:if="${not #strings.isEmpty(validInfo)}">
+      <br><hr><p style="color: red" th:text="${validInfo}"></p>
+  </div>
 </body>
 </html>

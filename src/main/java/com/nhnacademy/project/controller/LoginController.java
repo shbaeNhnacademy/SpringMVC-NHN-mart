@@ -1,5 +1,6 @@
 package com.nhnacademy.project.controller;
 
+import com.nhnacademy.project.exception.WrongLoginInfoException;
 import com.nhnacademy.project.repository.ManagerRepository;
 import com.nhnacademy.project.repository.SessionRepository;
 import com.nhnacademy.project.repository.UserRepository;
@@ -22,7 +23,6 @@ import java.util.Objects;
 @Controller
 @RequestMapping("/")
 public class LoginController {
-
     private final UserRepository userRepository;
     private final ManagerRepository managerRepository;
     private final SessionRepository sessionRepository;
@@ -63,7 +63,7 @@ public class LoginController {
             verifyLogin(id, request, response);
             return "redirect:/cs/admin";
         }
-        return "thymeleaf/loginForm";
+        throw new WrongLoginInfoException();
 
 
     }
@@ -73,7 +73,8 @@ public class LoginController {
         Cookie cookie = new Cookie("SESSION", session.getId());
         response.addCookie(cookie);
         session.setAttribute("login", id);
-        sessionRepository.addSession(session.getId(), session);
+        sessionRepository.add(session.getId(), session);
+
     }
 
 }
