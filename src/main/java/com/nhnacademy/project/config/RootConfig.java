@@ -3,6 +3,7 @@ package com.nhnacademy.project.config;
 import com.nhnacademy.project.Base;
 import com.nhnacademy.project.domain.Inquiry;
 import com.nhnacademy.project.domain.InquiryCategory;
+import com.nhnacademy.project.domain.UserGrade;
 import com.nhnacademy.project.repository.*;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -29,8 +30,8 @@ public class RootConfig {
     @Bean
     public UserRepository userRepository() {
         UserRepository userRepository = new UserRepositoryImpl();
-        userRepository.addUser("user", "1234","김고객");
-        userRepository.addUser("merge", "1234","박고객");
+        userRepository.addUser("user", "1234","김고객", UserGrade.CUSTOMER);
+        userRepository.addUser("merge", "1234", "박고객", UserGrade.CUSTOMER);
 
         return userRepository;
     }

@@ -20,7 +20,7 @@ public class ManagerRepositoryImpl implements ManagerRepository {
     @Override
     public boolean matches(String id, String password) {
         return Optional.ofNullable(getManager(id))
-                       .map(user -> user.getPassword().equals(password))
+                       .map(manager -> manager.getPassword().equals(password))
                        .orElse(false);
     }
 

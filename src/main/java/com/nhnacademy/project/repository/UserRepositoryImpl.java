@@ -2,6 +2,7 @@ package com.nhnacademy.project.repository;
 
 
 import com.nhnacademy.project.domain.User;
+import com.nhnacademy.project.domain.UserGrade;
 import com.nhnacademy.project.exception.UserAlreadyExistsException;
 
 import java.util.Map;
@@ -24,11 +25,11 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User addUser(String id, String password, String name) {
+    public User addUser(String id, String password, String name, UserGrade grade) {
         if (exists(id)) {
             throw new UserAlreadyExistsException();
         }
-        User user = User.create(id, password, name);
+        User user = User.create(id, password, name, grade);
 
         userMap.put(id, user);
         return user;

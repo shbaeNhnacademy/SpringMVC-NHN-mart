@@ -9,22 +9,16 @@ public class User {
     private final String password;
 
     private final String name;
+    private final UserGrade grade;
 
-    public static User create(String id, String password, String name) {
-
-        return new User(id, password, name);
+    public static User create(String id, String password, String name, UserGrade grade) {
+        return new User(id, password, name, grade);
     }
 
-    private User(String id, String password, String name) {
+    private User(String id, String password, String name, UserGrade grade) {
         this.id = id;
         this.password = password;
         this.name = name;
+        this.grade = grade;
     }
-
-    private static final String MASK = "*****";
-
-    public static User constructPasswordMaskedUser(User user) {
-        return User.create(user.getId(), MASK, user.getName());
-    }
-
 }
