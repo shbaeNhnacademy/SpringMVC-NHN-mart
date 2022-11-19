@@ -88,7 +88,7 @@ public class InquiryController {
         return "thymeleaf/inquiryView";
     }
 
-    @GetMapping(value = "/{inquiryId}/{filename}/view")
+    @GetMapping("/{inquiryId}/{filename}/view")
     public String getImagesPath(@PathVariable("inquiryId") long id,
                                 @PathVariable("filename") String filename,
                                 Model model) {
@@ -99,8 +99,7 @@ public class InquiryController {
 
     @ResponseBody
     @GetMapping("/{inquiryId}/{filename}")
-    public Resource getImageByFilename(@PathVariable("inquiryId") long id,
-                                       @PathVariable("filename") String filename) throws MalformedURLException {
+    public Resource getImageByFilename(@PathVariable("filename") String filename) throws MalformedURLException {
         Path path = Paths.get(RootConfig.UPLOAD_DIR + filename);
         return new UrlResource("file:" + path.toAbsolutePath());
     }

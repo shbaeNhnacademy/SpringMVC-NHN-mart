@@ -6,5 +6,7 @@
 </head>
 <body>
 <img alt="No File" width="500px" height="500px" th:src="@{/cs/inquiry/{id}/{filename}(id=${inquiryId},filename=${filename})}">
+<br><br><br>
+<a th:href="@{/cs/inquiry/{id}(id=${inquiryId})}">문의글로 돌아가기</a>
 </body>
 </html>
