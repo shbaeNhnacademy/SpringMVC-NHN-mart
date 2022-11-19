@@ -3,6 +3,7 @@ package com.nhnacademy.project;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 import javax.servlet.*;
 import java.util.EnumSet;
@@ -16,6 +17,8 @@ public class FilterInitializer implements WebApplicationInitializer {
         characterEncodingFilter.setEncoding("UTF-8");
         characterEncodingFilter.setForceEncoding(true);
 
+        registerFilter(servletContext, true, "encodingFilter", characterEncodingFilter);
+        registerFilter(servletContext, true, "httpMethodFilter", new HiddenHttpMethodFilter());
     }
 
     private void registerFilter(ServletContext servletContext, boolean insertBeforeOtherFilters, String filterName, Filter filter) {

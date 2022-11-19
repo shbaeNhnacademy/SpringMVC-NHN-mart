@@ -6,16 +6,20 @@ import com.nhnacademy.project.domain.InquiryRegisterRequest;
 import com.nhnacademy.project.exception.IllegalExtensionException;
 import com.nhnacademy.project.exception.ValidationFailedException;
 import com.nhnacademy.project.repository.InquiryRepository;
+import com.oracle.wls.shaded.org.apache.xpath.operations.Mod;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -29,7 +33,6 @@ import java.util.Objects;
 @Controller
 @RequestMapping("/cs/inquiry")
 public class InquiryController {
-    private static final String[] EXTENSIONS = {".gif", ".jpg", ".jpeg", ".png"};
 
     private final InquiryRepository inquiryRepository;
 
@@ -63,8 +66,6 @@ public class InquiryController {
         MultipartFile[] files = inquiryRegisterRequest.getFiles();
         if (!Objects.isNull(files) && files[0].getSize() != 0) {
             for (MultipartFile file : files) {
-                String extension = getExtension(file);
-                verifyExtensionException(extension);
                 file.transferTo(Paths.get(RootConfig.UPLOAD_DIR + file.getOriginalFilename()));
             }
             inquiry.setFiles(files);
@@ -75,20 +76,6 @@ public class InquiryController {
         return "redirect:/cs/inquiry/" + register;
     }
 
-    private static void verifyExtensionException(String extension) {
-        boolean isExtensionMatched = Arrays.asList(EXTENSIONS).contains(extension);
-        if (!isExtensionMatched) {
-            throw new IllegalExtensionException();
-        }
-    }
-
-    private static String getExtension(MultipartFile file) {
-        String filename = file.getOriginalFilename();
-        if (filename == null) {
-            throw new IllegalArgumentException();
-        }
-        return filename.substring(filename.lastIndexOf('.'));
-    }
 
     @GetMapping("/{inquiryId}")
     public String getDetailInquiry(@PathVariable("inquiryId") long id,
@@ -101,14 +88,20 @@ public class InquiryController {
         return "thymeleaf/inquiryView";
     }
 
+    @GetMapping(value = "/{inquiryId}/{filename}/view")
+    public String getImagesPath(@PathVariable("inquiryId") long id,
+                                @PathVariable("filename") String filename,
+                                Model model) {
+        model.addAttribute("inquiryId", id);
+        model.addAttribute("filename", filename);
+        return "thymeleaf/attachedImageView";
+    }
 
     @ResponseBody
     @GetMapping("/{inquiryId}/{filename}")
-    public Resource getImagesPath(@PathVariable("inquiryId") long id,
-                                @PathVariable("filename") String filename) throws MalformedURLException {
+    public Resource getImageByFilename(@PathVariable("inquiryId") long id,
+                                       @PathVariable("filename") String filename) throws MalformedURLException {
         Path path = Paths.get(RootConfig.UPLOAD_DIR + filename);
-        UrlResource urlResource = new UrlResource("file:" + path.toAbsolutePath());
-        log.error("{}",urlResource.getURL());
-        return urlResource;
+        return new UrlResource("file:" + path.toAbsolutePath());
     }
 }

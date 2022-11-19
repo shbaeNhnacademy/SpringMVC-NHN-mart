@@ -14,10 +14,11 @@
   분류 :  <span th:text="${inquiry.content}"></span><br />
   첨부 파일 :
   <ul th:each="file:${inquiry.files}" >
-      <li><a th:href="@{/cs/inquiry/{id}/{filename}(id=${inquiry.id},filename=${file.getOriginalFilename()})}" th:text="${file.getOriginalFilename()} "></a></li>
+      <li>
+          <a th:href="@{/cs/inquiry/{id}/{filename}/view(id=${inquiry.id},filename=${file.getOriginalFilename()})}" th:text="${file.getOriginalFilename()} "></a><br/>
+<!--          <img width="500px" height="400px" th:src="@{/cs/inquiry/{id}/{filename}(id=${inquiry.id},filename=${file.getOriginalFilename()})}">-->
+      </li>
   </ul>
-  <img th:src="|@{/cs/inquiry/{id}/{filename}(id=${inquiry.id},filename=${file.getOriginalFilename()})}|">
   <br />
-
 </body>
 </html>
