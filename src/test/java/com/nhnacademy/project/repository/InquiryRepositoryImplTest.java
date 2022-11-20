@@ -17,7 +17,6 @@ class InquiryRepositoryImplTest {
         inquiryRepository = new InquiryRepositoryImpl();
     }
 
-    //TODO 실패 케이스 작성 필요
     @Test
     @DisplayName("register - 성공")
     void register_success() {

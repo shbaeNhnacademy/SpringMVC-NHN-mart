@@ -46,44 +46,9 @@ class AdminAnswerControllerTest {
     }
 
     @Test
-    @DisplayName("getInquiryForAnswer - 성공")
-    void getInquiryForAnswer_success() throws Exception {
-        String adminId = "admin";
-        long id = 0L;
-        MockHttpServletRequestBuilder builder =
-                MockMvcRequestBuilders.get("/cs/admin/answer/" + id);
-        builder.queryParam("admin", adminId);
-
-        when(inquiryRepository.getInquiry(id)).thenReturn(inquiry);
-
-        mockMvc.perform(builder)
-                .andDo(print())
-                .andExpect(view().name("thymeleaf/adminAnswer"))
-                .andExpect(model().attribute("id", adminId))
-                .andExpect(model().attribute("path", RootConfig.UPLOAD_DIR))
-                .andExpect(model().attribute("inquiry", inquiry))
-                .andExpect(status().isOk());
-
+    void getInquiryForAnswer(){
     }
 
-    @Test
-    @DisplayName("getInquiryForAnswer - 실패 : 해당 id의 문의가 없음")
-    void getInquiryForAnswer_notfoundInquiry_fail() throws Exception {
-        String adminId = "admin";
-        long id = 1L;
-        MockHttpServletRequestBuilder builder =
-                MockMvcRequestBuilders.get("/cs/admin/answer/" + id);
-        builder.queryParam("admin", adminId);
-
-        when(inquiryRepository.getInquiry(id)).thenReturn(inquiry);
-        when(inquiryRepository.getInquiry(id)).thenThrow(InquiryNotFoundException.class);
-
-        Throwable th = catchThrowable(() -> mockMvc.perform(builder));
-        assertThat(th)
-                .isInstanceOf(NestedServletException.class)
-                .hasCauseInstanceOf(InquiryNotFoundException.class);
-
-    }
 
     @Test
     void postAnswer() {
