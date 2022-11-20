@@ -6,7 +6,7 @@
 </head>
 <body>
   <h2>문의 상세 내역 페이지</h2><br/>
-  <h4 th:text="${inquiry.isAnswered} ? '' : '답변 안됨'"></h4>
+  <h4 style="color: royalblue" th:text="${inquiry.isAnswered} ? '' : '답변 안됨'"></h4>
 
   제목 : <span th:text="${inquiry.title}"></span><br />
   작성자 :  <span style="font-weight: bold" th:text="${inquiry.writerId}"></span><br />

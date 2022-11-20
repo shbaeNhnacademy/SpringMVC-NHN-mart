@@ -12,4 +12,5 @@ public interface InquiryRepository {
     List<Inquiry> getInquiries();
 
     List<Inquiry> getInquiriesByUserId(String userId);
+
 }

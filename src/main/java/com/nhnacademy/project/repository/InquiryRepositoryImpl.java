@@ -53,7 +53,6 @@ public class InquiryRepositoryImpl implements InquiryRepository{
                 .collect(Collectors.toList());
     }
 
-
     private boolean exist(long id){
         return inquiryMap.containsKey(id);
     }
