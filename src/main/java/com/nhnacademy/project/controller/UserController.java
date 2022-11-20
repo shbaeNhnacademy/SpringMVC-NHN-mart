@@ -1,24 +1,16 @@
 package com.nhnacademy.project.controller;
 
-import com.nhnacademy.project.config.RootConfig;
 import com.nhnacademy.project.domain.Inquiry;
-import com.nhnacademy.project.domain.InquiryRegisterRequest;
-import com.nhnacademy.project.exception.IllegalExtensionException;
-import com.nhnacademy.project.exception.ValidationFailedException;
 import com.nhnacademy.project.repository.InquiryRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -45,5 +37,19 @@ public class UserController {
         return "thymeleaf/userMain";
     }
 
+    @GetMapping("/admin")
+    public String getAdminMain(HttpServletRequest request, ModelMap modelMap) {
+        String adminId = (String) request.getSession(false).getAttribute("login");
 
+        List<Inquiry> inquiries = inquiryRepository.getInquiries();
+
+        List<Inquiry> collect = inquiries.stream()
+                .filter(inquiry -> !inquiry.isAnswered())
+                .collect(Collectors.toList());
+
+        modelMap.put("id", adminId);
+        modelMap.put("inquiries", collect);
+
+        return "thymeleaf/adminMain";
+    }
 }

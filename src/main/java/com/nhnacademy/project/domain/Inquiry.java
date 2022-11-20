@@ -24,7 +24,7 @@ public class Inquiry {
     @Setter
     private String answerContent;
     @Setter
-    private Manager csManager;
+    private User admin;
     @Setter
     private LocalDateTime answeredDateTime;
 

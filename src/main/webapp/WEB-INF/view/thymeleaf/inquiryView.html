@@ -22,7 +22,7 @@
   </ul>
   <br /><hr />
   <div th:if="${inquiry.isAnswered}">
-      CS 담당자 :  <span style="font-weight: bold" th:text="${inquiry.csManager.id}"></span><br />
+      CS 담당자 :  <span style="font-weight: bold" th:text="${inquiry.admin.id}"></span><br />
       답변 일자 :  <span th:text="${#temporals.format(inquiry.answeredDateTime,'yyyy-MM-dd HH:mm')}"></span><br />
       답변 내용 :  <span th:text="${inquiry.answerContent}"></span><br />
   </div>

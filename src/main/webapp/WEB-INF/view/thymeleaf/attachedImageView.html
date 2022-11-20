@@ -7,6 +7,7 @@
 <body>
 <img alt="No File" width="500px" height="500px" th:src="@{/cs/inquiry/{id}/{filename}(id=${inquiryId},filename=${filename})}">
 <br><br><br>
-<a th:href="@{/cs/inquiry/{id}(id=${inquiryId})}">문의글로 돌아가기</a>
+
+<a href="#" onClick="history.back()">이전페이지로</a>
 </body>
 </html>

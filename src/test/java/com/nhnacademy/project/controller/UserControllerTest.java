@@ -54,4 +54,21 @@ class UserControllerTest {
                 .andExpect(status().isOk());
         verify(inquiryRepository, times(1)).getInquiriesByUserId(any());
     }
+
+    @Test
+    @DisplayName("getAdminMain - 성공")
+    void getAdminMain_success() throws Exception {
+        String adminId = "admin";
+        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/cs/admin");
+        builder.sessionAttr("login", adminId);
+
+        when(inquiryRepository.getInquiries()).thenReturn(inquiries);
+
+        mockMvc.perform(builder)
+                .andExpect(view().name("thymeleaf/adminMain"))
+                .andExpect(model().attribute("id", adminId))
+                .andExpect(model().attribute("inquiries", inquiries))
+                .andExpect(status().isOk());
+        verify(inquiryRepository, times(1)).getInquiries();
+    }
 }

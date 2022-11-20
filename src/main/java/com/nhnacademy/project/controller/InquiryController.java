@@ -57,16 +57,20 @@ public class InquiryController {
                 .build();
 
         MultipartFile[] files = inquiryRegisterRequest.getFiles();
+        fileDownloadAndSetFile(inquiry, files);
+
+        long register = inquiryRepository.register(inquiry);
+
+        return "redirect:/cs/inquiry/" + register;
+    }
+
+    private static void fileDownloadAndSetFile(Inquiry inquiry, MultipartFile[] files) throws IOException {
         if (!Objects.isNull(files) && files[0].getSize() != 0) {
             for (MultipartFile file : files) {
                 file.transferTo(Paths.get(RootConfig.UPLOAD_DIR + file.getOriginalFilename()));
             }
             inquiry.setFiles(files);
         }
-
-        long register = inquiryRepository.register(inquiry);
-
-        return "redirect:/cs/inquiry/" + register;
     }
 
 

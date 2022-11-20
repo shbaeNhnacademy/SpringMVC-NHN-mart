@@ -6,7 +6,6 @@
 </head>
 <body>
   <h2>문의 상세 내역 페이지</h2><br/>
-  <h4 style="color: royalblue" th:text="${inquiry.isAnswered} ? '' : '답변 안됨'"></h4>
 
   제목 : <span th:text="${inquiry.title}"></span><br />
   작성자 :  <span style="font-weight: bold" th:text="${inquiry.writerId}"></span><br />
@@ -17,16 +16,15 @@
   <ul th:each="file:${inquiry.files}" >
       <li>
           <a th:href="@{/cs/inquiry/{id}/{filename}/view(id=${inquiry.id},filename=${file.getOriginalFilename()})}" th:text="${file.getOriginalFilename()} "></a><br/>
-<!--          <img width="500px" height="400px" th:src="@{/cs/inquiry/{id}/{filename}(id=${inquiry.id},filename=${file.getOriginalFilename()})}">-->
       </li>
   </ul>
   <br /><hr />
-  <div th:if="${inquiry.isAnswered}">
-      CS 담당자 :  <span style="font-weight: bold" th:text="${inquiry.admin.id}"></span><br />
-      답변 일자 :  <span th:text="${#temporals.format(inquiry.answeredDateTime,'yyyy-MM-dd HH:mm')}"></span><br />
-      답변 내용 :  <span th:text="${inquiry.answerContent}"></span><br />
-  </div>
-  <br><br><br>
-  <a th:href="@{/cs}">고객 문의 페이지</a>
+  <form method="post" th:action="@{/cs/admin/answer/{id}(id=${inquiry.id})}">
+      CS 담당자  : <input type="text" name="adminId" th:value="${id}" readonly/><br />
+      답변 내용  : <textarea name="answerContent" rows="10" cols="80"></textarea><br />
+      <input type="submit" value="확인" /> &nbsp;
+      <button type="button" onclick="location.href='/cs/admin'">취소</button>
+  </form>
+
 </body>
 </html>

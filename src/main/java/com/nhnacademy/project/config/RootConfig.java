@@ -28,10 +28,11 @@ public class RootConfig {
         userRepository.add("user", "1234","김고객", UserGrade.CUSTOMER);
         userRepository.add("merge", "1234", "박고객", UserGrade.CUSTOMER);
 
+        // admin 등록
+        userRepository.add("admin", "12345", "최사장", UserGrade.ADMIN);
+
         // CS manger 등록
-        userRepository.add("admin", "12345", "최매니저", UserGrade.CS_MANAGER);
-
-
+        userRepository.add("csman", "12345", "구매니저", UserGrade.CS_MANAGER);
 
         return userRepository;
     }
