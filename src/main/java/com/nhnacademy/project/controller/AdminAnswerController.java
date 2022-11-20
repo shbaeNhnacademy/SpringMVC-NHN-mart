@@ -27,7 +27,7 @@ public class AdminAnswerController {
 
 
     @GetMapping("/{inquiryId}")
-    public String getDetailInquiry(@PathVariable("inquiryId") long id,
+    public String getInquiryForAnswer(@PathVariable("inquiryId") long id,
                                    @RequestParam("admin") String adminId,
                                    ModelMap modelMap) {
         Inquiry inquiry = inquiryRepository.getInquiry(id);

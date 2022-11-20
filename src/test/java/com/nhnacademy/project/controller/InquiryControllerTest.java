@@ -3,6 +3,7 @@ package com.nhnacademy.project.controller;
 import com.nhnacademy.project.config.RootConfig;
 import com.nhnacademy.project.domain.Inquiry;
 import com.nhnacademy.project.domain.InquiryCategory;
+import com.nhnacademy.project.exception.ValidationFailedException;
 import com.nhnacademy.project.repository.InquiryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -70,7 +71,9 @@ class InquiryControllerTest {
 
 
         Throwable th = catchThrowable(() -> mockMvc.perform(builder).andDo(print()));
-        assertThat(th).isInstanceOf(NestedServletException.class);
+        assertThat(th)
+                .isInstanceOf(NestedServletException.class)
+                .hasCauseInstanceOf(ValidationFailedException.class);
         verify(inquiryRepository,never()).register(any());
 
     }
