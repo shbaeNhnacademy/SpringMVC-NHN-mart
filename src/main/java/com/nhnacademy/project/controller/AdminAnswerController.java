@@ -3,14 +3,18 @@ package com.nhnacademy.project.controller;
 import com.nhnacademy.project.config.RootConfig;
 import com.nhnacademy.project.domain.Answer;
 import com.nhnacademy.project.domain.Inquiry;
+import com.nhnacademy.project.domain.User;
 import com.nhnacademy.project.exception.ValidationFailedException;
 import com.nhnacademy.project.repository.InquiryRepository;
+import com.nhnacademy.project.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 
@@ -20,11 +24,12 @@ import java.time.LocalDateTime;
 @RequestMapping("/cs/admin/answer")
 public class AdminAnswerController {
     private final InquiryRepository inquiryRepository;
+    private final UserRepository userRepository;
 
-    public AdminAnswerController(InquiryRepository inquiryRepository) {
+    public AdminAnswerController(InquiryRepository inquiryRepository, UserRepository userRepository) {
         this.inquiryRepository = inquiryRepository;
+        this.userRepository = userRepository;
     }
-
 
     @GetMapping("/{inquiryId}")
     public String getInquiryForAnswer(@PathVariable("inquiryId") long id,
@@ -48,12 +53,31 @@ public class AdminAnswerController {
         }
         Inquiry inquiry = inquiryRepository.getInquiry(id);
 
-        inquiry.setAdmin(answer.getAdmin());
+        User user = userRepository.getUser(answer.getAdminId());
+
+        inquiry.setAdmin(user);
         inquiry.setAnswerContent(answer.getAnswerContent());
         inquiry.setAnsweredDateTime(LocalDateTime.now());
         inquiry.setAnswered(true);
 
         return "redirect:/cs/admin";
 
+    }
+
+    @ExceptionHandler(ValidationFailedException.class)
+    public String handleValidationFailedException(HttpServletRequest request,
+                                                  Model model) {
+
+        String requestURI = request.getRequestURI();
+        String id = requestURI.substring(requestURI.lastIndexOf('/') + 1);
+
+        Inquiry inquiry = inquiryRepository.getInquiry(Long.parseLong(id));
+        String adminId = (String) request.getSession(false).getAttribute("login");
+
+        model.addAttribute("id", adminId);
+        model.addAttribute("inquiry", inquiry);
+        model.addAttribute("path", RootConfig.UPLOAD_DIR);
+
+        return "thymeleaf/adminAnswer";
     }
 }

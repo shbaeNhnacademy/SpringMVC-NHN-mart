@@ -71,9 +71,14 @@ public class LoginController {
                           @RequestParam("pwd") String pwd,
                           HttpServletRequest request,
                           HttpServletResponse response) {
+        StringBuilder sb = new StringBuilder("redirect:/");
+        if (id.length() == 0 || pwd.length() == 0) {
+            return sb.toString();
+        }
+
         verifyLoginInfo(id, pwd);
 
-        StringBuilder sb = new StringBuilder();
+
         createLoginState(id, request, response);
         classifyUrlByUserGrade(sb, id, true);
         return sb.toString();

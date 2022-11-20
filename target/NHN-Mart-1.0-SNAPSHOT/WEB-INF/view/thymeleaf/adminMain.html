@@ -53,9 +53,25 @@
     <main>
 
         <table class="table">
+            <caption>
+                <form th:action="@{/cs/admin}" method="post">
+                    <input type="submit" value="분류 변경" style="width: 8%; float: right">
+                    <select name="category" style="width: 15%; float: right">
+                        <option value="NONE">--선택하시오--</option>
+                        <option value="ALL">전체</option>
+                        <option value="COMPLAINT">불만 접수</option>
+                        <option value="SUGGESTION">제안</option>
+                        <option value="REFUND_EXCHANGE">환불/교환</option>
+                        <option value="COMPLIMENT">칭찬해요</option>
+                        <option value="ETC">기타 문의</option>
+                    </select>
+                </form>
+            </caption>
             <th class="tableHead" style="width: 10%">No.</th>
             <th class="tableHead" style="width: 40%">제목</th>
-            <th class="tableHead" style="width: 10%">분류</th>
+            <th class="tableHead" style="width: 10%">
+                 <br>분류
+            </th>
             <th class="tableHead" style="width: 15%">작성자</th>
             <th class="tableHead" style="width: 15%">작성일시</th>
             <th class="tableHead" style="width: 10%">답변여부</th>

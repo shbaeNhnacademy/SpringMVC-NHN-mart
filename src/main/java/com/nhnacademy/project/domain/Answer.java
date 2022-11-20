@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 @Data
 @AllArgsConstructor
 public class Answer {
-    private User admin;
+    private String adminId;
     @Size(min = 1, max = 40000)
     private String answerContent;
 }

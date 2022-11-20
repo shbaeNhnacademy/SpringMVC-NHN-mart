@@ -1,6 +1,8 @@
 package com.nhnacademy.project.domain;
 
 public enum InquiryCategory {
+    NONE("없음"),
+    ALL("전체"),
     COMPLAINT("불만 접수"),
     SUGGESTION("제안"),
     REFUND_EXCHANGE("환불/교환"),
